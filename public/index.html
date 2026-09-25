@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Связка — камеры вашей команды</title>
+  <meta name="description" content="Общая комната для камер телефона и отдельных видеоисточников OBS.">
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/config.js" defer></script><script src="/app.js" type="module"></script>
+</head>
+<body>
+  <div id="app">
+    <header class="topbar"><a class="brand" href="/" aria-label="Связка, главная"><span class="brand-icon">▰</span>связка<span class="brand-caption">CAMERA ROOM</span></a><span class="header-note">Телефон → команда → OBS</span><span id="connection" class="connection">Не подключено</span></header>
+    <main>
+      <section id="lobby" class="lobby">
+        <div class="intro"><span class="eyebrow">ВАША КОМАНДА В ОДНОМ КАДРЕ</span><h1>Камеры вместе.<br><span>Стрим у каждого свой.</span></h1><p>Включите камеру на телефоне.<br>Заберите нужный ракурс в OBS на компьютере.</p></div>
+        <div class="entry-card">
+          <div class="card-heading"><span class="step-index">01 / ПОДКЛЮЧЕНИЕ</span><span class="pill">До 6 участников</span></div>
+          <h2>Войти в связку</h2>
+          <form id="entry-form">
+            <label for="name">Как вас зовут</label><input id="name" autocomplete="nickname" maxlength="32" placeholder="Например, Саша" required>
+            <button id="create" class="button primary" type="submit">Создать комнату <span>＋</span></button>
+            <div class="divider"><span>или по приглашению</span></div>
+            <label for="invite">Ссылка на комнату</label><input id="invite" type="url" placeholder="Вставьте ссылку от участника" autocomplete="off">
+            <button id="join" class="button secondary" type="button">Присоединиться <span>↗</span></button>
+          </form>
+          <p class="fine-print">Камера включится только после вашего нажатия.</p>
+        </div>
+        <div class="workflow"><div><b>01</b><span>Создайте комнату<small>Одна ссылка для команды</small></span></div><div><b>02</b><span>Подключите телефоны<small>Каждая камера — отдельный источник</small></span></div><div><b>03</b><span>Соберите эфир в OBS<small>Игра с компьютера, камера с телефона</small></span></div></div>
+      </section>
+      <section id="studio" hidden>
+        <div class="studio-heading"><div><span class="eyebrow">ОБЩАЯ КОМНАТА</span><h1>Ваша связка <span id="member-count" class="count">0 / 6</span></h1></div><div class="actions"><button id="invite-copy" class="button primary">Пригласить участника ↗</button><button id="leave" class="button subtle">Выйти</button></div></div>
+        <div id="relay-notice" class="notice" hidden>Резервный маршрут TURN не настроен. В некоторых мобильных сетях видео может не подключиться.</div>
+        <div class="studio-layout"><div><div class="section-heading"><h2>Камеры команды</h2><span>Отдельные ссылки для OBS</span></div><div id="camera-grid" class="camera-grid"></div><div id="empty-team" class="empty-team">Отправьте приглашение команде — участники появятся здесь.</div></div>
+          <aside>
+            <section class="panel"><span class="step-index">ВАШ ТЕЛЕФОН / КАМЕРА</span><h2 id="local-name">Моя камера</h2><label for="camera">Камера</label><select id="camera"><option value="">Основная камера</option></select><label for="quality">Качество</label><select id="quality"><option value="720">720p · 30 кадров/с</option><option value="1080" selected>1080p · 30 кадров/с</option><option value="1080-60">1080p · 60 кадров/с</option></select><label class="check-label"><input type="checkbox" id="mic"> Передавать микрофон</label><button class="button primary" id="publish">Включить камеру</button><p id="capture-info" class="fine-print">Разрешение зависит от камеры и соединения.</p></section>
+            <section class="panel obs-guide"><span class="step-index">ПОДКЛЮЧЕНИЕ К OBS</span><h2>Камера поверх игры</h2><ol><li>Скопируйте ссылку у нужной камеры.</li><li>В OBS добавьте источник <strong>«Браузер»</strong>.</li><li>Вставьте ссылку. Укажите размер <strong>1920 × 1080</strong>.</li></ol><p class="fine-print">Ссылка даёт доступ к одной камере. Делитесь ею только с теми, кому доверяете.</p></section>
+          </aside>
+        </div>
+      </section>
+      <p id="error" class="error" role="alert" hidden></p>
+    </main>
+    <footer><span>СВЯЗКА / CAMERA ROOM</span><span>Камера под вашим контролем</span></footer>
+  </div>
+  <section id="obs-output" hidden><video id="obs-video" autoplay playsinline></video><div id="obs-status">Подключение к камере…</div><button id="obs-play" hidden>Включить видео и звук</button></section>
+  <div id="toast" role="status" hidden></div>
+</body>
+</html>
